@@ -11,7 +11,7 @@ var (
 	inputBinaryFile  = flag.String("input-file", "", "input bin file")
 	xorKey           = flag.Int("xor-key", 8, "input xor key")
 	outputBinaryFile = flag.String("output-file", "output.bin", "input bin file")
-	appendFlag = flag.String("append-flag", "A", "flag for file head, 1 bytes")
+	appendFlag = flag.String("append-flag", "", "flag for file head, 1 bytes")
 )
 
 func usage() {
@@ -48,7 +48,10 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	newFile.Write([]byte(*appendFlag))
+
+	if len(*appendFlag) > 0 {
+		newFile.Write([]byte(*appendFlag))
+	}
 	newFile.Write(data)
 	fmt.Println("[*]Flag Size:", len(*appendFlag))
 	fmt.Println("[*]Output:", *outputBinaryFile)
