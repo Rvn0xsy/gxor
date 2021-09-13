@@ -11,11 +11,12 @@ var (
 	inputBinaryFile  = flag.String("input-file", "", "input bin file")
 	xorKey           = flag.Int("xor-key", 8, "input xor key")
 	outputBinaryFile = flag.String("output-file", "output.bin", "input bin file")
+	appendFlag = flag.String("append-flag", "A", "flag for file head, 1 bytes")
 )
 
 func usage() {
 	fmt.Println("[gxor] Xor Binary file")
-	fmt.Println("Usage : gxor -input-file payload.bin -output-file out.bin -xor-key 10")
+	fmt.Println("Usage : gxor -input-file payload.bin -output-file out.bin -xor-key 10 -appendFlag A")
 }
 
 func main() {
@@ -47,6 +48,8 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	newFile.Write([]byte(*appendFlag))
 	newFile.Write(data)
-	fmt.Println("Output:", *outputBinaryFile)
+	fmt.Println("[*]Flag Size:", len(*appendFlag))
+	fmt.Println("[*]Output:", *outputBinaryFile)
 }
